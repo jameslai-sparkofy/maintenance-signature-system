@@ -80,9 +80,9 @@ class MaintenanceSignatureSystem {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_public_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         
-        // 處理前端請求
-        add_action('wp_ajax_mss_handle_signature', array($this, 'handle_signature_submission'));
-        add_action('wp_ajax_nopriv_mss_handle_signature', array($this, 'handle_signature_submission'));
+        // 處理前端請求 - 將由客戶門戶類別處理
+        add_action('wp_ajax_mss_handle_signature', array('MSS_Customer_Portal', 'handle_ajax_signature_submission'));
+        add_action('wp_ajax_nopriv_mss_handle_signature', array('MSS_Customer_Portal', 'handle_ajax_signature_submission'));
         
         // 短代碼支援
         add_shortcode('maintenance_signature_form', array($this, 'signature_form_shortcode'));
@@ -290,10 +290,14 @@ class MaintenanceSignatureSystem {
      * 載入依賴項
      */
     private function load_dependencies() {
+        // 載入核心類別
         require_once MSS_PLUGIN_PATH . 'includes/class-database.php';
-        require_once MSS_PLUGIN_PATH . 'includes/class-admin-menu.php';
         require_once MSS_PLUGIN_PATH . 'includes/class-customer-portal.php';
-        require_once MSS_PLUGIN_PATH . 'includes/class-maintenance-system.php';
+        
+        // 初始化客戶門戶（如果類別存在的話）
+        if (class_exists('MSS_Customer_Portal')) {
+            MSS_Customer_Portal::init();
+        }
     }
     
     /**
@@ -361,46 +365,6 @@ class MaintenanceSignatureSystem {
         include MSS_PLUGIN_PATH . 'admin/views/settings-page.php';
     }
     
-    /**
-     * 處理簽名提交
-     */
-    public function handle_signature_submission() {
-        // 驗證 nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'mss_nonce')) {
-            wp_die(__('Security check failed', 'maintenance-signature-system'));
-        }
-        
-        // 處理簽名數據
-        $signature_data = sanitize_text_field($_POST['signature_data']);
-        $maintenance_id = intval($_POST['maintenance_id']);
-        $customer_name = sanitize_text_field($_POST['customer_name']);
-        $customer_phone = sanitize_text_field($_POST['customer_phone']);
-        $customer_email = sanitize_email($_POST['customer_email']);
-        $satisfaction_rating = intval($_POST['satisfaction_rating']);
-        $feedback = sanitize_textarea_field($_POST['feedback']);
-        
-        // 保存簽名數據
-        $result = MSS_Database::save_signature(array(
-            'maintenance_id' => $maintenance_id,
-            'customer_name' => $customer_name,
-            'customer_phone' => $customer_phone,
-            'customer_email' => $customer_email,
-            'signature_data' => $signature_data,
-            'satisfaction_rating' => $satisfaction_rating,
-            'feedback' => $feedback,
-            'signed_at' => current_time('mysql')
-        ));
-        
-        if ($result) {
-            wp_send_json_success(array(
-                'message' => __('簽名提交成功！', 'maintenance-signature-system')
-            ));
-        } else {
-            wp_send_json_error(array(
-                'message' => __('簽名提交失敗，請稍後再試', 'maintenance-signature-system')
-            ));
-        }
-    }
     
     /**
      * 短代碼：客戶簽名表單

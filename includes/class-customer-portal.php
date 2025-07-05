@@ -302,6 +302,3 @@ class MSS_Customer_Portal {
         );
     }
 }
-
-// 初始化客戶門戶
-MSS_Customer_Portal::init();

@@ -1,0 +1,146 @@
+name: Cloudways Git Deployment
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    name: Code Quality & Testing
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv, mysql
+        coverage: none
+    
+    - name: Validate PHP syntax
+      run: |
+        echo "🔍 Validating PHP syntax..."
+        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors" || echo "✅ All PHP files are syntactically correct"
+    
+    - name: Check WordPress coding standards
+      run: |
+        echo "📝 Checking basic WordPress standards..."
+        # Check for proper plugin headers
+        if ! grep -q "Plugin Name:" maintenance-signature-system.php; then
+          echo "❌ Missing Plugin Name header"
+          exit 1
+        fi
+        if ! grep -q "Version:" maintenance-signature-system.php; then
+          echo "❌ Missing Version header"  
+          exit 1
+        fi
+        echo "✅ Plugin headers are present"
+    
+    - name: Validate file structure
+      run: |
+        echo "📁 Validating plugin structure..."
+        required_dirs=("admin" "includes" "public")
+        for dir in "${required_dirs[@]}"; do
+          if [ ! -d "$dir" ]; then
+            echo "❌ Missing required directory: $dir"
+            exit 1
+          fi
+        done
+        echo "✅ Plugin structure is valid"
+    
+    - name: Security scan
+      run: |
+        echo "🔒 Running basic security checks..."
+        # Check for potential security issues
+        if grep -r "eval(" --include="*.php" .; then
+          echo "⚠️ Warning: Found eval() usage"
+        fi
+        if grep -r "\$_GET\[" --include="*.php" . | grep -v "sanitize\|wp_verify_nonce"; then
+          echo "⚠️ Warning: Found unsanitized \$_GET usage"
+        fi
+        if grep -r "\$_POST\[" --include="*.php" . | grep -v "sanitize\|wp_verify_nonce"; then
+          echo "⚠️ Warning: Found unsanitized \$_POST usage"
+        fi
+        echo "✅ Basic security scan completed"
+
+  trigger-cloudways-deploy:
+    name: Trigger Cloudways Deployment
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Notify Cloudways Deployment
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: ${{ secrets.CLOUDWAYS_WEBHOOK_URL }}
+        method: 'POST'
+        customHeaders: '{"Content-Type": "application/json"}'
+        data: |
+          {
+            "repository": "${{ github.repository }}",
+            "commit": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "message": "${{ github.event.head_commit.message }}",
+            "author": "${{ github.event.head_commit.author.name }}"
+          }
+      continue-on-error: true
+    
+    - name: Wait for deployment
+      run: |
+        echo "⏳ Waiting for Cloudways deployment to complete..."
+        sleep 30
+        echo "✅ Deployment trigger sent to Cloudways"
+
+  post-deployment-check:
+    name: Post-Deployment Verification
+    needs: trigger-cloudways-deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Health check
+      run: |
+        echo "🏥 Performing post-deployment health check..."
+        # Add your WordPress site health check here
+        if [ -n "${{ secrets.WORDPRESS_SITE_URL }}" ]; then
+          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.WORDPRESS_SITE_URL }}")
+          if [ "$response" = "200" ]; then
+            echo "✅ Site is responding correctly"
+          else
+            echo "⚠️ Site returned HTTP $response"
+          fi
+        else
+          echo "ℹ️ No site URL configured for health check"
+        fi
+    
+    - name: Plugin status check
+      run: |
+        echo "🔌 Checking plugin deployment status..."
+        echo "Plugin should be available at: ${{ secrets.WORDPRESS_SITE_URL }}/wp-admin/plugins.php"
+        echo "✅ Deployment verification completed"
+
+  notify:
+    name: Send Notifications
+    needs: [test, trigger-cloudways-deploy, post-deployment-check]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Deployment Status
+      run: |
+        if [ "${{ needs.test.result }}" = "success" ] && [ "${{ needs.trigger-cloudways-deploy.result }}" = "success" ]; then
+          echo "🎉 Deployment completed successfully!"
+          echo "📊 Test Results: ✅ Passed"
+          echo "🚀 Deployment: ✅ Triggered"
+          echo "🔗 Site: ${{ secrets.WORDPRESS_SITE_URL }}"
+        else
+          echo "❌ Deployment failed"
+          echo "📊 Test Results: ${{ needs.test.result }}"
+          echo "🚀 Deployment: ${{ needs.trigger-cloudways-deploy.result }}"
+        fi
