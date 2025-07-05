@@ -14,7 +14,7 @@ class MSS_Frontend_Portal {
      * 初始化
      */
     public static function init() {
-        add_action('init', array(__CLASS__, 'handle_frontend_requests'));
+        add_action('wp', array(__CLASS__, 'handle_frontend_requests'));
         add_filter('template_include', array(__CLASS__, 'template_include'));
         add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_scripts'));
         
@@ -35,18 +35,33 @@ class MSS_Frontend_Portal {
         if (isset($_GET['mss_dashboard'])) {
             global $mss_show_dashboard;
             $mss_show_dashboard = true;
+            // 防止 WordPress 載入其他內容
+            remove_all_actions('wp_head');
+            add_action('wp_head', 'wp_enqueue_scripts', 1);
+            add_action('wp_head', 'wp_print_styles', 8);
+            add_action('wp_head', 'wp_print_head_scripts', 9);
         }
         
         // 新增維修單頁面
         if (isset($_GET['mss_create'])) {
             global $mss_show_create_form;
             $mss_show_create_form = true;
+            // 防止 WordPress 載入其他內容
+            remove_all_actions('wp_head');
+            add_action('wp_head', 'wp_enqueue_scripts', 1);
+            add_action('wp_head', 'wp_print_styles', 8);
+            add_action('wp_head', 'wp_print_head_scripts', 9);
         }
         
         // 系統設定頁面
         if (isset($_GET['mss_settings'])) {
             global $mss_show_settings;
             $mss_show_settings = true;
+            // 防止 WordPress 載入其他內容
+            remove_all_actions('wp_head');
+            add_action('wp_head', 'wp_enqueue_scripts', 1);
+            add_action('wp_head', 'wp_print_styles', 8);
+            add_action('wp_head', 'wp_print_head_scripts', 9);
         }
     }
     
@@ -54,24 +69,22 @@ class MSS_Frontend_Portal {
      * 模板包含過濾器
      */
     public static function template_include($template) {
-        global $mss_show_dashboard, $mss_show_create_form, $mss_show_settings;
-        
-        // 檢查是否是前端管理頁面
-        if ($mss_show_dashboard) {
+        // 直接檢查 URL 參數，不依賴全域變數
+        if (isset($_GET['mss_dashboard'])) {
             $custom_template = MSS_PLUGIN_PATH . 'public/templates/frontend-dashboard.php';
             if (file_exists($custom_template)) {
                 return $custom_template;
             }
         }
         
-        if ($mss_show_create_form) {
+        if (isset($_GET['mss_create'])) {
             $custom_template = MSS_PLUGIN_PATH . 'public/templates/frontend-create.php';
             if (file_exists($custom_template)) {
                 return $custom_template;
             }
         }
         
-        if ($mss_show_settings) {
+        if (isset($_GET['mss_settings'])) {
             $custom_template = MSS_PLUGIN_PATH . 'public/templates/frontend-settings.php';
             if (file_exists($custom_template)) {
                 return $custom_template;
@@ -85,10 +98,8 @@ class MSS_Frontend_Portal {
      * 載入前端腳本
      */
     public static function enqueue_scripts() {
-        global $mss_show_dashboard, $mss_show_create_form, $mss_show_settings;
-        
-        // 只在我們的前端頁面載入
-        if ($mss_show_dashboard || $mss_show_create_form || $mss_show_settings) {
+        // 直接檢查 URL 參數
+        if (isset($_GET['mss_dashboard']) || isset($_GET['mss_create']) || isset($_GET['mss_settings'])) {
             wp_enqueue_script('jquery');
             
             wp_enqueue_script(
