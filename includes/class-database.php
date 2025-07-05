@@ -97,6 +97,9 @@ class MSS_Database {
         
         // 插入默認工務姓名
         self::insert_default_constructors();
+        
+        // 插入測試維修單數據
+        self::insert_test_maintenance_orders();
     }
     
     /**
@@ -123,6 +126,55 @@ class MSS_Database {
                     'is_active' => 1
                 ),
                 array('%s', '%d')
+            );
+        }
+    }
+    
+    /**
+     * 插入測試維修單數據（僅用於演示）
+     */
+    private static function insert_test_maintenance_orders() {
+        global $wpdb;
+        
+        $maintenance_table = $wpdb->prefix . 'mss_maintenance_orders';
+        
+        // 檢查是否已經有維修單數據
+        $existing_count = $wpdb->get_var("SELECT COUNT(*) FROM $maintenance_table");
+        
+        if ($existing_count > 0) {
+            return; // 如果已有數據則不插入測試數據
+        }
+        
+        $test_orders = array(
+            array(
+                'form_number' => 'MF202507051200001',
+                'date' => date('Y-m-d'),
+                'location' => '台北市信義區測試案場',
+                'constructor_name' => '張工程師',
+                'building' => 'A棟',
+                'floor' => '3F',
+                'unit' => '301',
+                'problem_description' => '測試維修項目：水龍頭漏水需要更換墊片',
+                'status' => 'pending_customer_signature'
+            ),
+            array(
+                'form_number' => 'MF202507051200002',
+                'date' => date('Y-m-d'),
+                'location' => '新北市板橋區測試工地',
+                'constructor_name' => '李技師',
+                'building' => 'B棟',
+                'floor' => '5F',
+                'unit' => '502',
+                'problem_description' => '測試維修項目：電燈開關故障需要更換',
+                'status' => 'pending_customer_signature'
+            )
+        );
+        
+        foreach ($test_orders as $order) {
+            $wpdb->insert(
+                $maintenance_table,
+                $order,
+                array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
             );
         }
     }

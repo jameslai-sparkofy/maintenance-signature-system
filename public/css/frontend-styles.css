@@ -1,0 +1,1027 @@
+/**
+ * 前端樣式表
+ * 維修單線上簽名系統 - 工務人員前端介面
+ */
+
+/* 基本重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+/* 容器 */
+.mss-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 導航欄 */
+.mss-navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mss-navbar .mss-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.mss-navbar-brand h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.mss-navbar-brand a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mss-navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.mss-navbar-links {
+    display: flex;
+    gap: 20px;
+}
+
+.mss-navbar-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.mss-navbar-links a:hover,
+.mss-navbar-links a.active {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.mss-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* 頁面標題 */
+.mss-page-header {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.mss-page-header h1 {
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.mss-page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* 統計卡片 */
+.mss-stats-section {
+    margin-bottom: 2rem;
+}
+
+.mss-stats-section h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.mss-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.mss-stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.mss-stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.mss-stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.mss-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.mss-stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* 快速操作 */
+.mss-quick-actions {
+    margin-bottom: 2rem;
+}
+
+.mss-quick-actions h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.mss-action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.mss-action-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mss-action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.mss-action-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.mss-action-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.mss-action-desc {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* 表單樣式 */
+.mss-form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.mss-form-section h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
+}
+
+.mss-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mss-form-field {
+    margin-bottom: 1rem;
+}
+
+.mss-form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.mss-form-field input,
+.mss-form-field select,
+.mss-form-field textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.mss-form-field input:focus,
+.mss-form-field select:focus,
+.mss-form-field textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.mss-form-field input.error,
+.mss-form-field select.error,
+.mss-form-field textarea.error {
+    border-color: #e74c3c;
+}
+
+.mss-form-field input.invalid,
+.mss-form-field select.invalid,
+.mss-form-field textarea.invalid {
+    border-color: #e74c3c;
+    background-color: #fdf2f2;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+/* 按鈕樣式 */
+.mss-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.mss-button-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.mss-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.mss-button-secondary {
+    background: #f8f9fa;
+    color: #333;
+    border: 2px solid #ddd;
+}
+
+.mss-button-secondary:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.mss-button-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.mss-button-danger:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+}
+
+.mss-button-success {
+    background: #27ae60;
+    color: white;
+}
+
+.mss-button-success:hover {
+    background: #219a52;
+    transform: translateY(-2px);
+}
+
+.mss-button-outline {
+    background: transparent;
+    border: 2px solid #667eea;
+    color: #667eea;
+}
+
+.mss-button-outline:hover {
+    background: #667eea;
+    color: white;
+}
+
+.mss-button-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.mss-button-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+.mss-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 圖片上傳 */
+.mss-camera-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mss-button-camera {
+    background: #3498db;
+    color: white;
+}
+
+.mss-button-gallery {
+    background: #9b59b6;
+    color: white;
+}
+
+.mss-upload-info {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.mss-image-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.mss-preview-item {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mss-preview-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.mss-preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mss-preview-item:hover .mss-preview-overlay {
+    opacity: 1;
+}
+
+.mss-preview-info {
+    padding: 1rem;
+}
+
+.mss-preview-name {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.mss-preview-size {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.mss-image-preview.drag-over {
+    border: 2px dashed #667eea;
+    background: #f0f4ff;
+}
+
+/* 表單操作 */
+.mss-form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+/* 維修單列表 */
+.mss-recent-orders {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mss-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.mss-section-header h2 {
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.mss-orders-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.mss-order-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mss-order-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.mss-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.mss-order-number {
+    font-weight: 700;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.mss-order-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.mss-status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.mss-status-completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.mss-order-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+}
+
+.mss-order-info div {
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.mss-order-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.mss-order-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.mss-no-orders {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.mss-no-orders-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* 搜尋 */
+.mss-search-box {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.mss-search-box input {
+    flex: 1;
+}
+
+/* 分頁 */
+.mss-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.mss-pagination-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.mss-pagination-btn:hover {
+    background: #f8f9fa;
+}
+
+.mss-pagination-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+/* 模態框 */
+.mss-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+.mss-modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+
+.mss-modal-large {
+    max-width: 800px;
+}
+
+.mss-modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mss-modal-header h3 {
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.mss-modal-close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mss-modal-close:hover {
+    color: #333;
+}
+
+.mss-modal-body {
+    padding: 1.5rem;
+}
+
+.mss-modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
+.mss-success-info {
+    margin-bottom: 1.5rem;
+}
+
+.mss-success-info p {
+    margin-bottom: 0.5rem;
+}
+
+.mss-link-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.mss-link-container input {
+    flex: 1;
+}
+
+.mss-qr-code {
+    text-align: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* 設定頁面 */
+.mss-settings-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.mss-settings-section h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
+}
+
+.mss-constructors-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.mss-constructor-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.mss-constructor-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.mss-constructor-meta {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.mss-constructor-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.mss-no-constructors {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.mss-no-constructors-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.mss-system-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.mss-info-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.mss-info-label {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.mss-info-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.mss-quick-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.mss-warning {
+    color: #856404;
+    background: #fff3cd;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border: 1px solid #ffeaa7;
+}
+
+/* 載入狀態 */
+.mss-loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.mss-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.mss-loading-spinner {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.mss-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+.mss-loading-text {
+    color: #333;
+    font-weight: 600;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 通知系統 */
+.mss-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: white;
+    z-index: 10000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mss-notification.show {
+    transform: translateX(0);
+}
+
+.mss-notification-success {
+    background: #27ae60;
+}
+
+.mss-notification-error {
+    background: #e74c3c;
+}
+
+.mss-notification-info {
+    background: #3498db;
+}
+
+.mss-notification-warning {
+    background: #f39c12;
+}
+
+.mss-notification-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+/* 工具提示 */
+.mss-tooltip {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+.mss-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* 動畫 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .mss-container {
+        padding: 10px;
+    }
+    
+    .mss-navbar-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(102, 126, 234, 0.95);
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .mss-navbar-links.active {
+        display: flex;
+    }
+    
+    .mss-menu-toggle {
+        display: block;
+    }
+    
+    .mss-page-header {
+        padding: 1.5rem;
+    }
+    
+    .mss-page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .mss-stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .mss-action-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .mss-form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .mss-form-actions {
+        flex-direction: column;
+    }
+    
+    .mss-order-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .mss-order-actions {
+        justify-content: center;
+    }
+    
+    .mss-modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .mss-camera-controls {
+        flex-direction: column;
+    }
+    
+    .mss-image-preview {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .mss-search-box {
+        flex-direction: column;
+    }
+    
+    .mss-pagination {
+        flex-wrap: wrap;
+    }
+    
+    .mss-system-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .mss-quick-actions {
+        flex-direction: column;
+    }
+    
+    .mss-notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .mss-form-section {
+        padding: 1rem;
+    }
+    
+    .mss-modal-content {
+        margin: 5% auto;
+    }
+    
+    .mss-modal-header,
+    .mss-modal-body {
+        padding: 1rem;
+    }
+    
+    .mss-button {
+        padding: 0.75rem 1rem;
+    }
+    
+    .mss-constructor-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .mss-constructor-actions {
+        justify-content: center;
+    }
+}

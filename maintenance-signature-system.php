@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: 維修單線上簽名系統
- * Plugin URI: https://github.com/your-username/maintenance-signature-system
+ * Plugin URI: https://github.com/jameslai-sparkofy/maintenance-signature-system
  * Description: 專業的維修單管理系統，支援工務人員建立維修單、上傳圖片、生成客戶簽名連結，並提供完整的報告功能。
  * Version: 1.0.0
- * Author: Your Name
- * Author URI: https://your-website.com
+ * Author: JAMES
+ * Author URI: https://github.com/jameslai-sparkofy
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: maintenance-signature-system
@@ -293,10 +293,16 @@ class MaintenanceSignatureSystem {
         // 載入核心類別
         require_once MSS_PLUGIN_PATH . 'includes/class-database.php';
         require_once MSS_PLUGIN_PATH . 'includes/class-customer-portal.php';
+        require_once MSS_PLUGIN_PATH . 'includes/class-frontend-portal.php';
         
         // 初始化客戶門戶（如果類別存在的話）
         if (class_exists('MSS_Customer_Portal')) {
             MSS_Customer_Portal::init();
+        }
+        
+        // 初始化前端門戶（如果類別存在的話）
+        if (class_exists('MSS_Frontend_Portal')) {
+            MSS_Frontend_Portal::init();
         }
     }
     
