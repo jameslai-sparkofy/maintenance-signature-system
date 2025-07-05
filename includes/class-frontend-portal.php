@@ -15,8 +15,11 @@ class MSS_Frontend_Portal {
      */
     public static function init() {
         add_action('wp', array(__CLASS__, 'handle_frontend_requests'));
-        add_filter('template_include', array(__CLASS__, 'template_include'));
+        add_filter('template_include', array(__CLASS__, 'template_include'), 99);
         add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_scripts'));
+        
+        // 早期攔截，防止重定向
+        add_action('template_redirect', array(__CLASS__, 'prevent_redirects'), 1);
         
         // 處理 AJAX 請求
         add_action('wp_ajax_mss_create_maintenance_order', array(__CLASS__, 'ajax_create_maintenance_order'));
@@ -25,6 +28,23 @@ class MSS_Frontend_Portal {
         add_action('wp_ajax_nopriv_mss_get_maintenance_orders', array(__CLASS__, 'ajax_get_maintenance_orders'));
         add_action('wp_ajax_mss_manage_constructors', array(__CLASS__, 'ajax_manage_constructors'));
         add_action('wp_ajax_nopriv_mss_manage_constructors', array(__CLASS__, 'ajax_manage_constructors'));
+    }
+    
+    /**
+     * 防止重定向 - 在模板重定向時攔截我們的頁面
+     */
+    public static function prevent_redirects() {
+        if (isset($_GET['mss_dashboard']) || isset($_GET['mss_create']) || isset($_GET['mss_settings'])) {
+            // 移除可能導致重定向的動作
+            remove_action('template_redirect', 'redirect_canonical');
+            remove_action('template_redirect', 'wp_redirect_admin_locations', 1000);
+            
+            // 設置狀態為200
+            status_header(200);
+            
+            // 防止任何重定向
+            add_filter('redirect_canonical', '__return_false');
+        }
     }
     
     /**
@@ -73,7 +93,12 @@ class MSS_Frontend_Portal {
         if (isset($_GET['mss_dashboard'])) {
             $custom_template = MSS_PLUGIN_PATH . 'public/templates/frontend-dashboard.php';
             if (file_exists($custom_template)) {
+                // 強制使用我們的模板，不管主題如何
                 return $custom_template;
+            } else {
+                // 如果文件不存在，創建基本模板
+                self::create_emergency_template('dashboard');
+                return MSS_PLUGIN_PATH . 'public/templates/emergency-dashboard.php';
             }
         }
         
@@ -81,6 +106,9 @@ class MSS_Frontend_Portal {
             $custom_template = MSS_PLUGIN_PATH . 'public/templates/frontend-create.php';
             if (file_exists($custom_template)) {
                 return $custom_template;
+            } else {
+                self::create_emergency_template('create');
+                return MSS_PLUGIN_PATH . 'public/templates/emergency-create.php';
             }
         }
         
@@ -88,10 +116,28 @@ class MSS_Frontend_Portal {
             $custom_template = MSS_PLUGIN_PATH . 'public/templates/frontend-settings.php';
             if (file_exists($custom_template)) {
                 return $custom_template;
+            } else {
+                self::create_emergency_template('settings');
+                return MSS_PLUGIN_PATH . 'public/templates/emergency-settings.php';
             }
         }
         
         return $template;
+    }
+    
+    /**
+     * 創建應急模板（當主模板文件缺失時）
+     */
+    private static function create_emergency_template($type) {
+        $template_dir = MSS_PLUGIN_PATH . 'public/templates/';
+        
+        if (!file_exists($template_dir)) {
+            wp_mkdir_p($template_dir);
+        }
+        
+        $emergency_content = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>維修單系統 - ' . $type . '</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><h1>維修單系統 - ' . $type . '</h1><p>系統正在載入中...</p><p>如果此頁面持續顯示，請聯繫系統管理員。</p><p>URL參數已正確識別：' . $type . '</p></body></html>';
+        
+        file_put_contents($template_dir . 'emergency-' . $type . '.php', $emergency_content);
     }
     
     /**
