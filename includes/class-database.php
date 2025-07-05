@@ -138,11 +138,11 @@ class MSS_Database {
         
         $maintenance_table = $wpdb->prefix . 'mss_maintenance_orders';
         
-        // 檢查是否已經有維修單數據
-        $existing_count = $wpdb->get_var("SELECT COUNT(*) FROM $maintenance_table");
+        // 檢查是否已經有 ID 為 1 的維修單
+        $existing_order = $wpdb->get_var("SELECT COUNT(*) FROM $maintenance_table WHERE id = 1");
         
-        if ($existing_count > 0) {
-            return; // 如果已有數據則不插入測試數據
+        if ($existing_order > 0) {
+            return; // 如果已有 ID=1 的數據則不插入
         }
         
         $test_orders = array(
@@ -170,13 +170,32 @@ class MSS_Database {
             )
         );
         
-        foreach ($test_orders as $order) {
+        foreach ($test_orders as $index => $order) {
+            // 強制指定 ID 為 1, 2
+            $order['id'] = $index + 1;
+            
             $wpdb->insert(
                 $maintenance_table,
                 $order,
-                array('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
+                array('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
             );
         }
+    }
+    
+    /**
+     * 強制重建測試數據（用於調試）
+     */
+    public static function force_rebuild_test_data() {
+        global $wpdb;
+        
+        $maintenance_table = $wpdb->prefix . 'mss_maintenance_orders';
+        
+        // 刪除現有的測試數據
+        $wpdb->delete($maintenance_table, array('form_number' => 'MF202507051200001'));
+        $wpdb->delete($maintenance_table, array('form_number' => 'MF202507051200002'));
+        
+        // 重新插入測試數據
+        self::insert_test_maintenance_orders();
     }
     
     /**

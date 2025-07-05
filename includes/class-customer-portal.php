@@ -32,22 +32,14 @@ class MSS_Customer_Portal {
             $maintenance_order = MSS_Database::get_maintenance_order($maintenance_id);
             
             if (!$maintenance_order) {
-                // 如果維修單不存在，創建測試數據或顯示友好錯誤
-                if ($maintenance_id == 1) {
-                    // 為演示目的創建一個虛擬維修單
-                    $maintenance_order = (object) array(
-                        'id' => 1,
-                        'form_number' => 'MF202507051200001',
-                        'date' => date('Y-m-d'),
-                        'location' => '台北市信義區測試案場',
-                        'constructor_name' => '張工程師',
-                        'building' => 'A棟',
-                        'floor' => '3F',
-                        'unit' => '301',
-                        'problem_description' => '測試維修項目：水龍頭漏水需要更換墊片'
-                    );
-                } else {
-                    wp_die('維修單不存在或已被刪除。請聯繫工務人員確認維修單號碼。', '維修單不存在', array('response' => 404));
+                // 嘗試重建測試數據
+                MSS_Database::force_rebuild_test_data();
+                
+                // 重新查詢
+                $maintenance_order = MSS_Database::get_maintenance_order($maintenance_id);
+                
+                if (!$maintenance_order) {
+                    wp_die('維修單不存在或已被刪除。請聯繫工務人員確認維修單號碼。<br><br>調試資訊：查詢的維修單ID是 ' . $maintenance_id, '維修單不存在', array('response' => 404));
                 }
             }
             
