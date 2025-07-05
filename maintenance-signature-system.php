@@ -3,7 +3,7 @@
  * Plugin Name: 維修單線上簽名系統
  * Plugin URI: https://github.com/jameslai-sparkofy/maintenance-signature-system
  * Description: 專業的維修單管理系統，支援工務人員建立維修單、上傳圖片、生成客戶簽名連結，並提供完整的報告功能。
- * Version: 1.0.0
+ * Version: 0.0.1
  * Author: JAMES
  * Author URI: https://github.com/jameslai-sparkofy
  * License: GPL v2 or later
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 define('MSS_PLUGIN_FILE', __FILE__);
 define('MSS_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('MSS_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('MSS_PLUGIN_VERSION', '1.0.0');
+define('MSS_PLUGIN_VERSION', '0.0.1');
 define('MSS_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 /**
@@ -328,7 +328,7 @@ class MaintenanceSignatureSystem {
         );
         
         add_option('mss_settings', $default_settings);
-        add_option('mss_db_version', '1.0.0');
+        add_option('mss_db_version', '0.0.1');
     }
     
     /**
