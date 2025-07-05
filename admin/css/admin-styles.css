@@ -1,0 +1,486 @@
+/**
+ * 維修單管理系統 - 管理後台樣式
+ */
+
+/* 統計卡片 */
+.mss-stats-cards {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.mss-stat-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mss-stat-number {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #0073aa;
+    margin-bottom: 5px;
+}
+
+.mss-stat-label {
+    color: #666;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 搜索表單 */
+.mss-search-form {
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.mss-search-form .search-box {
+    margin: 0;
+}
+
+.mss-search-form input[type="search"] {
+    width: 300px;
+    margin-right: 10px;
+}
+
+/* 無維修單狀態 */
+.mss-no-orders {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.mss-no-orders-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.mss-no-orders h2 {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.mss-no-orders p {
+    color: #999;
+    margin-bottom: 20px;
+}
+
+/* 狀態標籤 */
+.mss-status-pending {
+    background: #ffb900;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.mss-status-completed {
+    background: #46b450;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.mss-status-unknown {
+    background: #999;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* 操作按鈕 */
+.mss-action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.mss-action-buttons .button {
+    margin: 0;
+}
+
+/* 表單樣式 */
+.mss-form-section {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.mss-form-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.mss-form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.mss-form-field {
+    flex: 1;
+}
+
+.mss-form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.mss-form-field input,
+.mss-form-field select,
+.mss-form-field textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.mss-form-field textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.mss-form-field .description {
+    margin-top: 5px;
+    color: #666;
+    font-size: 13px;
+}
+
+.mss-form-field .required {
+    color: #d63638;
+}
+
+.mss-form-actions {
+    padding: 20px;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
+.mss-form-actions .button {
+    margin-left: 10px;
+}
+
+/* 圖片預覽 */
+.mss-image-preview {
+    margin-top: 10px;
+}
+
+.mss-preview-item {
+    display: inline-block;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.mss-preview-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
+.mss-preview-name {
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
+}
+
+/* 已上傳圖片 */
+.mss-uploaded-images {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.mss-media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.mss-media-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.mss-media-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+}
+
+.mss-media-actions {
+    padding: 8px;
+    text-align: center;
+    background: #f9f9f9;
+}
+
+.mss-media-actions .button {
+    font-size: 12px;
+    height: auto;
+    padding: 4px 8px;
+}
+
+/* 資訊框 */
+.mss-info-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.mss-info-box h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.mss-info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mss-info-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mss-info-table td:first-child {
+    width: 40%;
+    color: #666;
+}
+
+/* 連結框 */
+.mss-link-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.mss-link-box input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+/* 分頁樣式 */
+.tablenav .pagination-links {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.tablenav .pagination-links .button {
+    padding: 4px 8px;
+    height: auto;
+    line-height: 1.4;
+}
+
+/* 響應式設計 */
+@media (max-width: 782px) {
+    .mss-stats-cards {
+        flex-direction: column;
+    }
+    
+    .mss-stat-card {
+        min-width: auto;
+    }
+    
+    .mss-form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .mss-search-form input[type="search"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .mss-action-buttons {
+        flex-direction: column;
+    }
+    
+    .mss-link-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .mss-media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
+
+/* 列表表格優化 */
+.wp-list-table .column-form-number {
+    width: 15%;
+}
+
+.wp-list-table .column-location {
+    width: 20%;
+}
+
+.wp-list-table .column-constructor {
+    width: 12%;
+}
+
+.wp-list-table .column-address {
+    width: 15%;
+}
+
+.wp-list-table .column-status {
+    width: 10%;
+}
+
+.wp-list-table .column-date {
+    width: 15%;
+}
+
+.wp-list-table .column-actions {
+    width: 13%;
+}
+
+/* 行動裝置表格 */
+@media (max-width: 782px) {
+    .wp-list-table .column-address,
+    .wp-list-table .column-date {
+        display: none;
+    }
+}
+
+/* 成功/錯誤訊息 */
+.notice {
+    margin: 20px 0;
+}
+
+.notice p {
+    margin: 0.5em 0;
+    padding: 2px;
+}
+
+/* 載入動畫 */
+.mss-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0073aa;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 工具提示 */
+.mss-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.mss-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.mss-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 自訂按鈕樣式 */
+.mss-button-primary {
+    background: #0073aa;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.mss-button-primary:hover {
+    background: #005a87;
+}
+
+.mss-button-secondary {
+    background: #f7f7f7;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.mss-button-secondary:hover {
+    background: #e9e9e9;
+}
+
+/* 隱藏元素 */
+.mss-hidden {
+    display: none !important;
+}
+
+/* 淡入動畫 */
+.mss-fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

@@ -1,0 +1,45 @@
+# WordPress specific
+.htaccess
+wp-config.php
+wp-content/uploads/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+
+# Plugin specific
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Development files
+node_modules/
+.sass-cache/
+*.map
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*~
+*.swp
+*.swo
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# Environment files
+.env
+.env.local
